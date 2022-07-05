@@ -5,24 +5,20 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from './config';
-import { DataSource } from 'typeorm';
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'mediumclone',
-      password: 'bikram',
-      database: 'mediumclone',
-      entities: [TagEntity],
-      synchronize: true,
-    }),
-    TagModule,
-  ],
+  imports: [TypeOrmModule.forRoot(config), TagModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
-}
+export class AppModule {}
+
+// TypeOrmModule.forRoot({
+//   type: 'postgres',
+//   host: 'localhost',
+//   port: 5432,
+//   username: 'mediumclone',
+//   password: 'bikram',
+//   database: 'mediumclone',
+//   entities: [TagEntity],
+//   synchronize: false,
+// })
