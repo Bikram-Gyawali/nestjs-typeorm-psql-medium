@@ -1,5 +1,5 @@
-import { UserModule } from './../user/user.module';
-import { TagModule } from './../tag/tag.module';
+import { UserModule } from './user/user.module';
+import { TagModule } from './tag/tag.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';

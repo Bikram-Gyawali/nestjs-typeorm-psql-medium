@@ -1,4 +1,4 @@
-import { TagEntity } from './../tag/tag.entity';
+import { TagEntity } from './tag/tag.entity';
 import { ConnectionOptions } from 'typeorm';
 const config: ConnectionOptions = {
   type: 'postgres',
