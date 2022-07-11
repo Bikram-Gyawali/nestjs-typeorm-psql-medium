@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config.ts",
     "db:drop": "yarn typeorm schema:drop",
-    "db:create": "yarn typeorm migration:create -- -n",
+    "db:create": "yarn typeorm migration:generate -- -n",
     "db:migrate": "yarn typeorm migration:run"
   },
   "dependencies": {

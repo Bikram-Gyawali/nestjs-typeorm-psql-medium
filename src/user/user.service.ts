@@ -1,5 +1,5 @@
 import { UserEntity } from './user.entity';
-import { CreateUserDto } from './dto/createUserDto.dto';
+import { CreateUserDto } from './dto/createUser.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,6 +11,7 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
   async createUser(createUserDto: CreateUserDto) {
-    return await this.userRepository.create();
+    const newUser = new UserEntity();
+    Object.assign(newUser, createUserDto);
   }
 }
