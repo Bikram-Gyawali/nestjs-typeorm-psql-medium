@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/config.ts",
     "db:drop": "yarn typeorm schema:drop",
-    "db:create": "yarn typeorm migration:generate -- -n",
+    "db:create": "yarn typeorm migration:create -- -n",
     "db:migrate": "yarn typeorm migration:run"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/typeorm": "^8.1.4",
     "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
