@@ -1,3 +1,4 @@
+import { UserResponseInterface } from './types/userResponse.interface';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/createUserDto.dto';
 import { Injectable } from '@nestjs/common';
@@ -29,7 +30,7 @@ export class UserService {
     );
   }
 
-  buildUserResponse(user: UserEntity): any {
+  buildUserResponse(user: UserEntity): UserResponseInterface {
     return {
       user: { ...user, token: this.generateJwt(user) },
     };
