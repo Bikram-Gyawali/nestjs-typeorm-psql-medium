@@ -1,3 +1,4 @@
+import { LoginUserDto } from './dto/loginUser.dto';
 import { UserResponseInterface } from './types/userResponse.interface';
 import { UserEntity } from './user.entity';
 import { CreateUserDto } from './dto/createUserDto.dto';
@@ -6,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { sign } from 'jsonwebtoken';
 import { JWT_SECRET } from 'src/config';
+import { compare } from 'bcrypt';
 @Injectable()
 export class UserService {
   constructor(
@@ -47,5 +49,31 @@ export class UserService {
     return {
       user: { ...user, token: this.generateJwt(user) },
     };
+  }
+
+  async login(loginUserDto: LoginUserDto): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      email: loginUserDto.email,
+    });
+    if (!user) {
+      throw new HttpException(
+        'Crdentials unvalid',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    const isPasswordCorrect = await compare(
+      loginUserDto.password,
+      user.password,
+    );
+
+    if (!isPasswordCorrect) {
+      throw new HttpException(
+        'Credentials not valid',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
+    return user;
   }
 }
