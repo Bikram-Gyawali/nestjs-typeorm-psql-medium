@@ -77,7 +77,7 @@ export class UserService {
       );
     }
 
-    delete user.password;
+    delete user.password;  //password to delete
     return user;
   }
 }
