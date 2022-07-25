@@ -77,7 +77,7 @@ export class UserService {
       );
     }
 
-    delete user.password; //delete password cause we have taken out the pw field from db by selecting as done above
+    delete user.password;
     return user;
   }
 }
