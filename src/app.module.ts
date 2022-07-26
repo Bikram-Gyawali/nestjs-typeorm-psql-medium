@@ -1,6 +1,7 @@
+import { AuthMiddleware } from './user/middleware/auth.middleware';
 import { UserModule } from './user/user.module';
 import { TagModule } from './tag/tag.module';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -10,7 +11,14 @@ import config from './ormconfig';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
 
 // TypeOrmModule.forRoot({
 //   type: 'postgres',
