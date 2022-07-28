@@ -1,3 +1,4 @@
+import { UpdateUserDto } from './dto/updateUser.dto';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { UserResponseInterface } from './types/userResponse.interface';
 import { UserEntity } from './user.entity';
@@ -32,6 +33,15 @@ export class UserService {
     Object.assign(newUser, createUserDto);
     console.log('newuser', newUser);
     return this.userRepository.save(newUser);
+  }
+
+  async updateUser(
+    userId: number,
+    updateUserDto: UpdateUserDto,
+  ): Promise<UserEntity> {
+    const user = await this.findById(userId);
+    Object.assign(user, updateUserDto);
+    return await this.userRepository.save(user);
   }
 
   generateJwt(user: UserEntity): string {
