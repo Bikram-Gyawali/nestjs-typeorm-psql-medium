@@ -1,3 +1,4 @@
+import { AuthGuard } from './guards/auth.guard';
 import { UserEntity } from './user.entity';
 import { ExpressRequest } from './../types/expressRequest.interface';
 import { LoginUserDto } from './dto/loginUser.dto';
@@ -10,6 +11,7 @@ import {
   Get,
   Post,
   Req,
+  UseGuards,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -39,6 +41,7 @@ export class UserController {
   }
 
   @Get('user')
+  @UseGuards(AuthGuard)
   async currentUser(
     // @Req() request: ExpressRequest,
     @User() user: UserEntity,
