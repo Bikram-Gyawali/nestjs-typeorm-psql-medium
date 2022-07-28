@@ -1,3 +1,4 @@
+import { UserEntity } from './user.entity';
 import { ExpressRequest } from './../types/expressRequest.interface';
 import { LoginUserDto } from './dto/loginUser.dto';
 import { UserResponseInterface } from './types/userResponse.interface';
@@ -14,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 import { Any } from 'typeorm';
+import { User } from './decorators/user.decorator';
 
 @Controller()
 export class UserController {
@@ -38,8 +40,10 @@ export class UserController {
 
   @Get('user')
   async currentUser(
-    @Req() request: ExpressRequest,
+    // @Req() request: ExpressRequest,
+    @User() user: UserEntity,
   ): Promise<UserResponseInterface> {
-    return this.userService.buildUserResponse(request.user);
+    console.log(user);
+    return this.userService.buildUserResponse(user);
   }
 }
