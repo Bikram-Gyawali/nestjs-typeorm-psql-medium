@@ -52,6 +52,8 @@ export class UserController {
     return this.userService.buildUserResponse(user);
   }
 
+
+  //update usr
   @Put('user')
   @UseGuards(AuthGuard)
   async updateCurrentUser(
