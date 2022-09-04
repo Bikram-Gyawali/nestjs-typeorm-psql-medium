@@ -6,4 +6,3 @@ export class ArticleService {
     return 'createArticle from service';
   }
 }
-// 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
