@@ -53,11 +53,11 @@ export class ArticleController {
   async updateArticle(
     @User('id') currentUserId: number,
     @Param('slug') slug: string,
-    updadteArticleDto: CreateArticleDto,
+    @Body('article') updadteArticleDto: CreateArticleDto,
   ) {
     const article = await this.articleService.updteArticle(
       slug,
-      updateArticle,
+      updadteArticleDto ,
       currentUserId,
     );
     return await this.articleService.buildArticleResponse(article);
