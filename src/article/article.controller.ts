@@ -1,3 +1,4 @@
+import { ArticlesResponseInterface } from './types/articlesResponse.interface';
 import { ArticleResponseInterface } from './types/articleResponse.interface';
 import { UserEntity } from 'src/user/user.entity';
 import { CreateArticleDto } from './dto/createArticle.dto';
@@ -11,13 +12,25 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { User } from 'src/user/decorators/user.decorator';
 
 @Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
+
+  @Get()
+  async findAll(
+    @User('id') currentUserId: number,
+    @Query() query: any,
+  ): Promise<ArticlesResponseInterface> {
+    return await this.articleService.findAll(currentUserId, query);
+  }
+
   @Post()
   @UseGuards(AuthGuard)
   async create(
@@ -50,16 +63,29 @@ export class ArticleController {
 
   @Put(':slug')
   @UseGuards(AuthGuard)
+  @UsePipes(new ValidationPipe())
   async updateArticle(
     @User('id') currentUserId: number,
     @Param('slug') slug: string,
-    @Body('article') updadteArticleDto: CreateArticleDto,
+    @Body('article') updateArticleDto: CreateArticleDto,
   ) {
-    const article = await this.articleService.updteArticle(
+    const article = await this.articleService.updateArticle(
       slug,
-      updadteArticleDto ,
+      updateArticleDto,
       currentUserId,
     );
-    return await this.articleService.buildArticleResponse(article);
+    return this.articleService.buildArticleResponse(article);
+  }
+  @Post(':slug/favorite')
+  @UseGuards(AuthGuard)
+  async addArticleToFavourites(
+    @User('id') currentUserId: number,
+    @Param('slug') slug: string,
+  ): Promise<ArticleResponseInterface> {
+    const article = await this.articleService.addArticleToFavourites(
+      slug,
+      currentUserId,
+    );
+    return this.articleService.buildArticleResponse(article);
   }
 }
